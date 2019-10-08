@@ -9,8 +9,6 @@ import SearchForm from './SearchForm/SearchForm';
 import Gallery from './Gallery/Gallery';
 import Modal from './Modal/Modal';
 
-let page = 1;
-
 class App extends Component {
     listRef = createRef();
 
@@ -23,13 +21,15 @@ class App extends Component {
         largeImgUrl: '',
     };
 
+    page;
+
     handleSearchFormValue = value => {
         this.setState({ isLoading: true });
         this.setState({ currentValue: value });
 
-        page = 1;
+        this.page = 1;
 
-        const APIUrl = `https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${value}&page=${page}&per_page=12&key=13846876-f4b9301a849f606d51ead0c00`;
+        const APIUrl = `https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${value}&page=${this.page}&per_page=12&key=13846876-f4b9301a849f606d51ead0c00`;
 
         axios
             .get(APIUrl)
@@ -67,9 +67,9 @@ class App extends Component {
     loadMore = () => {
         const { currentValue } = this.state;
 
-        page += 1;
+        this.page += 1;
 
-        const APIUrl = `https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${currentValue}&page=${page}&per_page=12&key=13846876-f4b9301a849f606d51ead0c00`;
+        const APIUrl = `https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${currentValue}&page=${this.page}&per_page=12&key=13846876-f4b9301a849f606d51ead0c00`;
 
         axios
             .get(APIUrl)
